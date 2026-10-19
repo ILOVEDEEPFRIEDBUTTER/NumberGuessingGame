@@ -1,0 +1,122 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+// Define the BankOperations interface
+interface BankOperations {
+    void deposit(double amount);
+    void withdraw(double amount);
+    void checkBalance();
+}
+
+// Implement the interface in a BankAccount class
+class BankAccount implements BankOperations {
+    private String accountHolder;
+    private double balance;
+    private final String fileName;
+
+    public BankAccount(String accountHolder, double initialBalance) {
+        this.accountHolder = accountHolder;
+        this.balance = initialBalance;
+        this.fileName = accountHolder + "_transactions.txt";
+        createLogFile();
+    }
+
+    // Helper method to create the log file if it doesn't exist
+    private void createLogFile() {
+        try {
+            File file = new File(fileName);
+            if (file.createNewFile()) {
+                writeLog("Account created for " + accountHolder + " with initial balance: $" + balance);
+            }
+        } catch (IOException e) {
+            System.out.println("Error creating log file: " + e.getMessage());
+        }
+    }
+
+    // Helper method to write data to the file (File Handling)
+    private void writeLog(String message) {
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+            writer.write(message + "\n");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Successfully deposited: $" + amount);
+            writeLog("Deposited: $" + amount + " | New Balance: $" + balance);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Successfully withdrew: $" + amount);
+            writeLog("Withdrew: $" + amount + " | New Balance: $" + balance);
+        } else {
+            System.out.println("Insufficient funds or invalid amount.");
+        }
+    }
+
+    @Override
+    public void checkBalance() {
+        System.out.println("Current Balance for " + accountHolder + ": $" + balance);
+    }
+}
+
+// Main class to run the program
+public class CodingalBankingServices {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter account holder name: ");
+        String name = scanner.nextLine();
+        
+        System.out.print("Enter initial balance: ");
+        double initialBalance = scanner.nextDouble();
+
+        BankAccount myAccount = new BankAccount(name, initialBalance);
+
+        int choice;
+        do {
+            System.out.println("\n--- Codingal Banking Services ---");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Check Balance");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter amount to deposit: ");
+                    double depAmount = scanner.nextDouble();
+                    myAccount.deposit(depAmount);
+                    break;
+                case 2:
+                    System.out.print("Enter amount to withdraw: ");
+                    double withAmount = scanner.nextDouble();
+                    myAccount.withdraw(withAmount);
+                    break;
+                case 3:
+                    myAccount.checkBalance();
+                    break;
+                case 4:
+                    System.out.println("Thank you for using Codingal Banking Services!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 4);
+
+        scanner.close();
+    }
+}
