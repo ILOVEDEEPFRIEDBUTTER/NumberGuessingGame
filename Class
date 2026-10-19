@@ -1,0 +1,19 @@
+class Car {
+    String brand;
+    int year;
+
+    Car(String brand, int year) {
+        this.brand = brand;
+        this.year = year;
+        System.out.println("Constructor called! Object created.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car carObj = new Car("Toyota", 2023);
+
+        System.out.println("Brand: " + carObj.brand);
+        System.out.println("Year: " + carObj.year);
+    }
+}
