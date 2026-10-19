@@ -1,0 +1,33 @@
+// Base grandparent class
+class Animal {
+    void eat() {
+        System.out.println("eating...Animal class...eat method");
+    }
+}
+
+// Child class inheriting from Animal
+class Lion extends Animal {
+    void roar() {
+        System.out.println("Roar...Lion class...roar method");
+    }
+}
+
+// Grandchild class inheriting from Lion
+class BabyLion extends Lion {
+    void weep() {
+        System.out.println("weeping...BabyLion class...weep method");
+    }
+}
+
+// Main class to execute the program
+public class Main {
+    public static void main(String args[]) {
+        // Creating an object of the lowest child class
+        BabyLion obj = new BabyLion();
+        
+        // Calling methods from all levels of the inheritance chain
+        obj.weep(); // Defined in BabyLion
+        obj.roar(); // Inherited from Lion
+        obj.eat();  // Inherited from Animal
+    }
+}
