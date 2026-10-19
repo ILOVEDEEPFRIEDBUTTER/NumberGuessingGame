@@ -1,0 +1,86 @@
+// Base class
+class Wonder {
+    private String name;
+    private String location;
+
+    public Wonder(String name, String location) {
+        this.name = name;
+        this.location = location;
+    }
+
+    // Method to be overridden by subclasses (Polymorphism)
+    public void displayDetails() {
+        System.out.println("Wonder: " + name + " | Location: " + location);
+    }
+}
+
+// Subclasses overriding the displayDetails method
+class GreatWall extends Wonder {
+    public GreatWall() {
+        super("Great Wall of China", "China");
+    }
+    
+    @Override
+    public void displayDetails() {
+        super.displayDetails();
+    }
+}
+
+class Petra extends Wonder {
+    public Petra() {
+        super("Petra", "Jordan");
+    }
+}
+
+class Colosseum extends Wonder {
+    public Colosseum() {
+        super("Colosseum", "Italy");
+    }
+}
+
+class ChichenItza extends Wonder {
+    public ChichenItza() {
+        super("Chichen Itza", "Mexico");
+    }
+}
+
+class MachuPicchu extends Wonder {
+    public MachuPicchu() {
+        super("Machu Picchu", "Peru");
+    }
+}
+
+class TajMahal extends Wonder {
+    public TajMahal() {
+        super("Taj Mahal", "India");
+    }
+}
+
+class ChristTheRedeemer extends Wonder {
+    public ChristTheRedeemer() {
+        super("Christ the Redeemer", "Brazil");
+    }
+}
+
+// Main class to execute polymorphism
+public class SevenWonders {
+    public static void main(String[] args) {
+        // An array of the base class type holding various subclass instances
+        Wonder[] wonders = {
+            new GreatWall(),
+            new Petra(),
+            new Colosseum(),
+            new ChichenItza(),
+            new MachuPicchu(),
+            new TajMahal(),
+            new ChristTheRedeemer()
+        };
+
+        System.out.println("--- The Seven Wonders of the World ---");
+        
+        // Polymorphic behavior: calling the same method name executes subclass-specific logic
+        for (Wonder wonder : wonders) {
+            wonder.displayDetails();
+        }
+    }
+}
